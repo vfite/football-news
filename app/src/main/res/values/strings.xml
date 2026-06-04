@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Football News</string>
+
+    <string-array name="categoriesName">
+        <item>Україна</item>
+        <item>Франція</item>
+        <item>Англія</item>
+        <item>Італія</item>
+        <item>Іспанія</item>
+        <item>Португалія</item>
+        <item>Інше</item>
+    </string-array>
+
+    <string-array name="categoriesCodes">
+        <item>ukraine</item>
+        <item>france</item>
+        <item>england</item>
+        <item>italy</item>
+        <item>spain</item>
+        <item>portugal</item>
+        <item>countrieselse</item>
+    </string-array>
 </resources>

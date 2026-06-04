@@ -7,9 +7,30 @@ espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.14.0"
 kotlinVersion = "2.0.0"
+okHttpVersion = '4.11.0'
+timberVersion = '5.0.1'
+retrofitVersion = '2.9.0'
+moshiVersion = '1.14.0'
+retrofitCoroutinesVersion = '1.15.0'
+kodeinVersion = '7.21.2'
+workVersion = '2.10.1'
+glideVersion = '4.15.1'
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
+retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofitVersion" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttpVersion" }
+okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okHttpVersion" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timberVersion" }
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshiVersion" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiVersion" }
+kodein = { module = "org.kodein.di:kodein-di", version.ref = "kodeinVersion" }
+kodein-conf = { module = "org.kodein.di:kodein-di-conf-jvm", version.ref = "kodeinVersion" }
+kodein-android = { module = "org.kodein.di:kodein-di-framework-android-x", version.ref = "kodeinVersion" }
+work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workVersion" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
