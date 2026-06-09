@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Football News"
 include(":app")
- 
+include(":shared-domain")

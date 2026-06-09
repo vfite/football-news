@@ -3,7 +3,7 @@ package com.vfite.football.widget.renderer
 import android.content.Context
 import android.widget.RemoteViews
 import com.vfite.football.R
-import com.vfite.football.models.MatchItem
+import com.vfite.football.data.models.MatchItem
 
 class MatchItemRenderer(
     val context: Context

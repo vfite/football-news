@@ -8,18 +8,17 @@ import android.view.View
 import android.widget.RemoteViews
 import com.vfite.football.R
 import com.vfite.football.util.appWidgetManager
-import com.vfite.football.widget.IWidgetService
-import com.vfite.football.widget.data.SyncState
+import com.vfite.football.domain.SyncState
 import com.vfite.football.widget.system.FootballWidgetProvider
 import com.vfite.football.widget.system.LatestNewsBroadcastReceiver
 import com.vfite.football.widget.system.MatchesRemoteService
+import com.vfite.football.widget.system.createWidgetPendingEvent
 import com.vfite.football.widget.ui.LatestNewsViewModel
 import timber.log.Timber
 
 class MatchDayRenderer(
     val context: Context,
-    val latestNewsViewModel: LatestNewsViewModel,
-    val widgetService: IWidgetService
+    val latestNewsViewModel: LatestNewsViewModel
 ) : IRemoteViewRenderer {
 
     override fun render(widgetId: Int): RemoteViews {
@@ -54,7 +53,7 @@ class MatchDayRenderer(
     private fun initMainViews(remoteViews: RemoteViews, widgetId: Int) {
         remoteViews.setOnClickPendingIntent(
             R.id.matches_btn,
-            widgetService.createPendingEvent(
+            createWidgetPendingEvent(
                 context = context,
                 widgetId = widgetId,
                 action = LatestNewsBroadcastReceiver.ACTION_SHOW_MATCHES
@@ -63,7 +62,7 @@ class MatchDayRenderer(
 
         remoteViews.setOnClickPendingIntent(
             R.id.sync_btn,
-            widgetService.createPendingEvent(
+            createWidgetPendingEvent(
                 context = context,
                 widgetId = widgetId,
                 action = LatestNewsBroadcastReceiver.ACTION_SYNC_MATCHES

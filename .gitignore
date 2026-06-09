@@ -69,3 +69,4 @@ google-services.json
 
 # Android Profiling
 *.hprof
+.worktrees/

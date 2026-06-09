@@ -5,7 +5,7 @@ import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.vfite.football.R
-import com.vfite.football.models.MatchItem
+import com.vfite.football.data.models.MatchItem
 import com.vfite.football.util.appWidgetId
 import com.vfite.football.widget.renderer.MatchItemRenderer
 import com.vfite.football.widget.ui.LatestNewsViewModel

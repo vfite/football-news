@@ -1,8 +1,10 @@
 package com.vfite.football
 
 import android.app.Application
+import com.vfite.football.di.apiModule
 import com.vfite.football.di.networkModule
 import com.vfite.football.di.domainModule
+import com.vfite.football.di.sharedDomainModule
 import com.vfite.football.di.systemModule
 import org.kodein.di.DI
 import org.kodein.di.conf.global
@@ -20,12 +22,13 @@ class FootballApplication : Application() {
         with(DI.global) {
             addImport(networkModule(
                 context = this@FootballApplication,
-                apiUrl = BuildConfig.API_URL,
                 newsUrl = BuildConfig.NEWS_URL
                 )
             )
-            addImport(domainModule(this@FootballApplication))
+            addImport(apiModule(baseUrl = BuildConfig.API_URL))
             addImport(systemModule(this@FootballApplication))
+            addImport(domainModule(this@FootballApplication))
+            addImport(sharedDomainModule())
         }
     }
 }
