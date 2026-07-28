@@ -18,13 +18,9 @@ The widget has two main tabs:
 
 ## Architecture
 
-The app is a home-screen **App Widget**, with a thin companion app used only to host the launch surface and deep-link into news items.
+Football-news is a multi-module Android project centered around the home-screen widget experience:
 
-- **Domain layer** — use cases (`LoadLatestNewsUseCase`, `LoadDayMatchesUseCase`, `RefreshDataUseCase`, `RefreshMatchesUseCase`) fetch and expose data as a `FeedResult<T>` (`Success`/`Error`). Background refresh is driven by `WorkManager` jobs (`SyncNewsJob`) kicked off through `RemoteSyncService`, which tracks progress as `SyncState` (`Syncing`/`Synced`/`Failed`).
-- **UI layer** — `LatestNewsViewModel` is the single source of truth for widget state (current news item, matches, News/Matches mode). `IRemoteViewRenderer` implementations turn that state into `RemoteViews`, rendered by `FootballWidgetProvider` on update and by `MatchesRemoteService`/`MatchesProviderFactory` for the scrollable matches list. `LatestNewsBroadcastReceiver` handles widget button actions (refresh, next/previous, toggle mode) and feeds back into the ViewModel.
-- **Data flow**: user action or scheduled sync → `SyncService` enqueues a `WorkManager` job → use case hits the API → result updates `SyncState`/`LatestNewsViewModel` → widget is invalidated → renderers rebuild `RemoteViews` for `AppWidgetManager`.
+- **`:app`** — Android application module. Owns the widget system, DI wiring, and view-layer rendering (`IRemoteViewRenderer` implementations, WorkManager sync jobs).
+- **`:shared-domain`** — Kotlin Multiplatform module (Android + iOS targets) containing the platform-agnostic domain, data, and networking layer, built on Ktor.
 
-Dependency injection uses **Kodein-DI** via global modules, since widget components (`AppWidgetProvider`, `RemoteViewsService`) aren't constructor-injectable and resolve dependencies from `DI.global` directly.
-
-**On the `feature/KMP-intro` branch, the domain/data/networking layer above is being migrated into a `:shared-domain` Kotlin Multiplatform module (Android + iOS, on Ktor), leaving `:app` with only Android-specific widget and DI glue.**
-
+See [`CLAUDE.md`](CLAUDE.md) for a detailed breakdown of module responsibilities, dependency injection setup, and data flow.
