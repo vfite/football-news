@@ -16,10 +16,10 @@ This is a multi-module project whose primary surface is a **home screen widget**
 |---|---|---|
 | `api/` | `:shared-domain` (commonMain) | `ApiClient` (raw Ktor calls), `ApiRepository` (interface), `KtorApiRepository` (impl), `HttpClientEngine` (`expect`) |
 | `api/` | `:shared-domain` (androidMain/iosMain) | `actual fun createHttpClientEngine()` — OkHttp on Android, Darwin on iOS |
-| `data/`, `data/models/` | `:shared-domain` | `LatestNewsDataSource` / `MatchesDataSource` interfaces + in-memory `Real*` impls, feed/item models |
-| `domain/` | `:shared-domain` | `FeedResult`, `SyncService` (interface + `SyncState`), use cases (`Load*`, `Refresh*`) |
+| `data/`, `data/models/` | `:shared-domain` | `LatestNewsDataSource` / `MatchesDataSource` interfaces + in-memory `Real*` impls, `NewsRepository` / `MatchesRepository` (read cached data + `refresh()` from API), feed/item models |
+| `domain/` | `:shared-domain` | `FeedResult`, `SyncService` (interface + `SyncState`), `RefreshDataUseCase` |
 | `widget/IWidgetService.kt` | `:shared-domain` | Interface only — implementation is Android-specific |
-| `di/` (`SharedDomainModule.kt`, `ApiModule.kt`) | `:shared-domain` | Kodein modules binding the above; `apiModule(baseUrl)` builds the `HttpClient`/`ApiClient`/`ApiRepository` graph, `sharedDomainModule()` binds data sources + use cases |
+| `di/` (`SharedDomainModule.kt`, `ApiModule.kt`) | `:shared-domain` | Kodein modules binding the above; `apiModule(baseUrl)` builds the `HttpClient`/`ApiClient`/`ApiRepository` graph, `sharedDomainModule()` binds data sources, repositories + use cases |
 | `widget/system/`, `widget/renderer/`, `widget/ui/`, `widget/jobs/`, `widget/data/RemoteSyncService.kt` | `:app` | Android framework classes, `IRemoteViewRenderer` impls, `LatestNewsViewModel`, WorkManager job, `SyncService` impl |
 | `di/` (`networkModule.kt`, `domainModule.kt`, `systemService.kt`) | `:app` | Kodein modules binding Android-specific pieces (renderers, `SyncService` impl, `IWidgetService` impl, `LatestNewsViewModel`) |
 
@@ -59,3 +59,17 @@ There is no local database.
 
 ### Logging
 Use `Timber.d(...)` / `Timber.e(...)` throughout — never `Log.*` directly.
+
+## Agent skills
+
+### Issue tracker
+
+Tickets are local markdown files under `.scratch/<feature>/issues/`; specs live in `docs/specs/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`), recorded as a `Status:` line in each ticket. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.

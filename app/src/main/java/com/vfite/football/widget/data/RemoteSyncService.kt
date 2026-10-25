@@ -11,9 +11,7 @@ import com.vfite.football.domain.SyncService
 import com.vfite.football.domain.SyncState
 import com.vfite.football.widget.IWidgetService
 import com.vfite.football.widget.jobs.SyncNewsJob
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class RemoteSyncService(
@@ -50,9 +48,7 @@ class RemoteSyncService(
     override fun updateState(synced: SyncState) {
         val curState = _innerState.value
         Timber.d("updateState from:$curState to $synced")
-        GlobalScope.launch {
-            _innerState.emit(synced)
-        }
+        _innerState.value = synced
     }
 
     private fun createWorker(jobsMode: Int) {

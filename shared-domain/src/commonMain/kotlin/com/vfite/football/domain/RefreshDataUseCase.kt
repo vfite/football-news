@@ -1,29 +1,21 @@
 package com.vfite.football.domain
 
-import com.vfite.football.api.ApiRepository
+import com.vfite.football.data.MatchesRepository
+import com.vfite.football.data.NewsRepository
 import com.vfite.football.data.models.NewsData
-import com.vfite.football.util.getCurrentDate
-import com.vfite.football.widget.IWidgetService
-import com.vfite.football.data.LatestNewsDataSource
-import com.vfite.football.data.MatchesDataSource
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 class RefreshDataUseCase(
-    val apiRepository: ApiRepository,
-    val latestNewsDataSource: LatestNewsDataSource,
-    val matchesDataSource: MatchesDataSource,
-    val widgetService: IWidgetService
+    val newsRepository: NewsRepository,
+    val matchesRepository: MatchesRepository
 ) {
 
-    suspend fun execute(): FeedResult<NewsData> {
-        val newsResponse = apiRepository.getNewsFeed()
-        val matchesResponse = apiRepository.getMatchesFeed(getCurrentDate())
-        if (newsResponse is FeedResult.Success) {
-            latestNewsDataSource.saveNews(newsResponse.feed.data)
-        }
-        if (matchesResponse is FeedResult.Success) {
-            matchesDataSource.saveMatches(matchesResponse.feed.data.items)
-        }
-        widgetService.invalidateWidget()
-        return newsResponse
+    suspend fun execute(): FeedResult<NewsData> = coroutineScope {
+        val newsResponse = async { newsRepository.refresh() }
+        val matchesResponse = async { matchesRepository.refresh() }
+        awaitAll(newsResponse, matchesResponse)
+        newsResponse.await()
     }
 }

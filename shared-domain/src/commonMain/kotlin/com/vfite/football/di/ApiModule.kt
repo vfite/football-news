@@ -21,7 +21,7 @@ import org.kodein.di.singleton
 /**
  * Binds the Ktor-based API client and [ApiRepository] implementation.
  * Must be imported alongside `sharedDomainModule()` before resolving
- * `RefreshDataUseCase` / `RefreshMatchesUseCase`.
+ * `RefreshDataUseCase` or the repositories (`NewsRepository`, `MatchesRepository`).
  */
 fun apiModule(baseUrl: String) = DI.Module("ApiModule") {
 
@@ -31,8 +31,14 @@ fun apiModule(baseUrl: String) = DI.Module("ApiModule") {
             install(ContentNegotiation) {
                 json(Json { ignoreUnknownKeys = true })
             }
+
             install(Logging) {
-                level = LogLevel.ALL
+                logger = object : Logger {
+                    override fun log(message: String)  {
+                        println("-->API Logger : $message")
+                    }
+                }
+                level = LogLevel.BODY
             }
         }
     }

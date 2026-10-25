@@ -1,0 +1,259 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "59ebe2b5b5f28ddaf9e0106100f94eca",
+    "entities": [
+      {
+        "tableName": "news_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rowId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `position` INTEGER NOT NULL, `id` INTEGER NOT NULL, `itemTitle` TEXT NOT NULL, `imageWide` TEXT NOT NULL, `imageSmall` TEXT NOT NULL, `isImportant` INTEGER NOT NULL, `isVideo` INTEGER NOT NULL, `category` TEXT NOT NULL, `postDate` TEXT NOT NULL, `commentsCount` INTEGER NOT NULL, `commentsCountTop` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "rowId",
+            "columnName": "rowId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemTitle",
+            "columnName": "itemTitle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageWide",
+            "columnName": "imageWide",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageSmall",
+            "columnName": "imageSmall",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isImportant",
+            "columnName": "isImportant",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isVideo",
+            "columnName": "isVideo",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postDate",
+            "columnName": "postDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "commentsCount",
+            "columnName": "commentsCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "commentsCountTop",
+            "columnName": "commentsCountTop",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowId"
+          ]
+        }
+      },
+      {
+        "tableName": "match_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rowId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `position` INTEGER NOT NULL, `gameId` INTEGER, `champId` INTEGER, `team1Id` INTEGER, `team2Id` INTEGER, `tourId` INTEGER, `tourName` TEXT, `team1Score` TEXT NOT NULL, `team2Score` TEXT NOT NULL, `team1PenaltyScore` TEXT, `team2PenaltyScore` TEXT, `isEnded` INTEGER, `statusId` TEXT, `date` TEXT, `time` TEXT NOT NULL, `team1ImageUrl` TEXT, `team2ImageUrl` TEXT, `team1Name` TEXT, `team2Name` TEXT, `champName` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "rowId",
+            "columnName": "rowId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "gameId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "champId",
+            "columnName": "champId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "team1Id",
+            "columnName": "team1Id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "team2Id",
+            "columnName": "team2Id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "tourId",
+            "columnName": "tourId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "tourName",
+            "columnName": "tourName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "team1Score",
+            "columnName": "team1Score",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team2Score",
+            "columnName": "team2Score",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team1PenaltyScore",
+            "columnName": "team1PenaltyScore",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "team2PenaltyScore",
+            "columnName": "team2PenaltyScore",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isEnded",
+            "columnName": "isEnded",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "statusId",
+            "columnName": "statusId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team1ImageUrl",
+            "columnName": "team1ImageUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "team2ImageUrl",
+            "columnName": "team2ImageUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "team1Name",
+            "columnName": "team1Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "team2Name",
+            "columnName": "team2Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "champName",
+            "columnName": "champName",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "rowId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_match_items_date",
+            "unique": false,
+            "columnNames": [
+              "date"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_match_items_date` ON `${TABLE_NAME}` (`date`)"
+          }
+        ]
+      },
+      {
+        "tableName": "feed_info",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`feed` TEXT NOT NULL, `fetchedAtMillis` INTEGER NOT NULL, `requestedDate` TEXT, PRIMARY KEY(`feed`))",
+        "fields": [
+          {
+            "fieldPath": "feed",
+            "columnName": "feed",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fetchedAtMillis",
+            "columnName": "fetchedAtMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "requestedDate",
+            "columnName": "requestedDate",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "feed"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '59ebe2b5b5f28ddaf9e0106100f94eca')"
+    ]
+  }
+}
