@@ -11,15 +11,16 @@ import com.vfite.football.data.models.Pages
 import com.vfite.football.domain.FeedResult
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 
 class FakeApiRepository : ApiRepository {
     var newsResult: FeedResult<NewsData> = FeedResult.Error(Exception("not set"))
     var matchesResult: FeedResult<MatchesData> = FeedResult.Error(Exception("not set"))
-    val requestedMatchDates = mutableListOf<String>()
+    val requestedMatchDates = mutableListOf<LocalDate>()
 
     override suspend fun getNewsFeed(): FeedResult<NewsData> = newsResult
 
-    override suspend fun getMatchesFeed(date: String): FeedResult<MatchesData> {
+    override suspend fun getMatchesFeed(date: LocalDate): FeedResult<MatchesData> {
         requestedMatchDates += date
         return matchesResult
     }

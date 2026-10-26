@@ -32,7 +32,6 @@ class LatestNewsViewModel(
     var listMatches: ArrayList<MatchItem> = arrayListOf()
     var currentItem: Int = 0
 
-    /** Reads the current News and Matches Snapshots into memory in parallel; fire and forget. */
     fun loadData() {
         applicationScope.launch(Dispatchers.Main) {
             coroutineScope {

@@ -19,10 +19,23 @@ kotlin {
         }
     }
 
-    iosArm64()
-    iosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { target ->
+        target.binaries.framework {
+            baseName = "SharedDomain"
+            isStatic = true
+        }
+    }
 
     applyDefaultHierarchyTemplate()
+
+    compilerOptions {
+        // Room generates an `actual` for FootballDatabaseConstructor.
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -33,7 +46,6 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.ktor.client.logging)
             api(libs.room.runtime)
             implementation(libs.sqlite.bundled)
         }
@@ -56,6 +68,7 @@ room {
 
 dependencies {
     add("kspAndroid", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
 }

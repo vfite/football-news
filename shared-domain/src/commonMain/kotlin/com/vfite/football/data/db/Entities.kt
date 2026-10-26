@@ -3,6 +3,7 @@ package com.vfite.football.data.db
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import kotlinx.datetime.LocalDate
 
 /**
  * One row per news item of the current News Snapshot. Rows get a generated key and
@@ -68,5 +69,5 @@ data class FeedInfoEntity(
     @PrimaryKey val feed: Feed,
     val fetchedAtMillis: Long,
     /** The date the matches were requested for; null for News. */
-    val requestedDate: String?
+    val requestedDate: LocalDate?
 )

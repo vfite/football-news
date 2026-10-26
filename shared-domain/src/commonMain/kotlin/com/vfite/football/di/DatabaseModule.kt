@@ -15,12 +15,6 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 
-/**
- * Binds the Room database and the Room-backed data sources. The platform supplies the
- * [builder] (Android: from the application `Context`; iOS: a file in the App Group container);
- * the driver, query dispatcher and migration policy are set here.
- * Must be imported alongside `sharedDomainModule()`.
- */
 fun databaseModule(builder: RoomDatabase.Builder<FootballDatabase>) = DI.Module("DatabaseModule") {
 
     bind<FootballDatabase>() with singleton {

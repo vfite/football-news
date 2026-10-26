@@ -10,18 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 
 interface MatchesRepository {
 
-    /**
-     * The current Today's Matches Snapshot; a not-fetched (empty) Snapshot when matches were
-     * never fetched or the stored ones belong to another day. Never hits the network.
-     */
     suspend fun getTodayGames(): Snapshot<MatchItem>
 
-    /** Fetches today's matches from the API and, on success only, replaces the Snapshot. */
     suspend fun refresh(): FeedResult<MatchesData>
 }
 
@@ -38,7 +34,6 @@ class DefaultMatchesRepository(
     }
 
     override suspend fun refresh(): FeedResult<MatchesData> = withContext(ioDispatcher) {
-        println("MatchesRepository refresh")
         val date = today()
         val matchesResponse = apiRepository.getMatchesFeed(date)
         if (matchesResponse is FeedResult.Success) {
@@ -54,5 +49,5 @@ class DefaultMatchesRepository(
         matchesResponse
     }
 
-    private fun today(): String = clock.todayIn(timeZone()).toString()
+    private fun today(): LocalDate = clock.todayIn(timeZone())
 }

@@ -12,10 +12,8 @@ import kotlinx.datetime.Instant
 
 interface LatestNewsDataSource {
 
-    /** The stored News Snapshot, or null when News was never fetched or can't be read. Never throws. */
     suspend fun loadNews(): Snapshot<NewsItem>?
 
-    /** Replaces the stored News Snapshot with [items] fetched at [fetchedAt]. Never throws; a storage failure is returned as [FeedResult.Error]. */
     suspend fun saveNews(items: List<NewsItem>, fetchedAt: Instant): FeedResult<Unit>
 }
 

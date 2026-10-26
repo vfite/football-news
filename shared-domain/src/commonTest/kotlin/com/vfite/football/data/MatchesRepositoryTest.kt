@@ -5,6 +5,7 @@ import com.vfite.football.domain.FeedResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -27,7 +28,7 @@ class MatchesRepositoryTest {
     fun storedMatchesFromYesterdayAreNotReturned() = runTest {
         val dataSource = InMemoryMatchesDataSource()
         dataSource.saveMatches(
-            date = "2026-10-13",
+            date = LocalDate(2026, 10, 13),
             items = listOf(matchItem(7)),
             fetchedAt = Instant.parse("2026-10-13T18:00:00Z")
         )
@@ -41,7 +42,7 @@ class MatchesRepositoryTest {
 
         repository().refresh()
 
-        assertEquals(listOf("2026-10-14"), api.requestedMatchDates)
+        assertEquals(listOf(LocalDate(2026, 10, 14)), api.requestedMatchDates)
     }
 
     @Test

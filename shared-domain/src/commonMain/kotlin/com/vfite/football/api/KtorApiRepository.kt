@@ -6,6 +6,7 @@ import com.vfite.football.domain.FeedResult
 import io.ktor.client.plugins.ResponseException
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.serialization.SerializationException
+import kotlinx.datetime.LocalDate
 
 /**
  * [ApiRepository] implementation backed by Ktor's [ApiClient]. Replaces the
@@ -18,7 +19,7 @@ class KtorApiRepository(
     override suspend fun getNewsFeed(): FeedResult<NewsData> =
         safeCall { apiClient.getNewsFeed() }
 
-    override suspend fun getMatchesFeed(date: String): FeedResult<MatchesData> =
+    override suspend fun getMatchesFeed(date: LocalDate): FeedResult<MatchesData> =
         safeCall { apiClient.getMatchesFeed(date) }
 
     private suspend fun <T : Any> safeCall(execute: suspend () -> T): FeedResult<T> {

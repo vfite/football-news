@@ -13,10 +13,8 @@ import kotlinx.datetime.Clock
 
 interface NewsRepository {
 
-    /** The current News Snapshot; a not-fetched (empty) Snapshot when News was never fetched. Never hits the network. */
     suspend fun getNews(): Snapshot<NewsItem>
 
-    /** Fetches news from the API and, on success only, replaces the Snapshot. */
     suspend fun refresh(): FeedResult<NewsData>
 }
 
@@ -32,7 +30,6 @@ class DefaultNewsRepository(
     }
 
     override suspend fun refresh(): FeedResult<NewsData> = withContext(ioDispatcher) {
-        println("NewsRepository refresh")
         val newsResponse = apiRepository.getNewsFeed()
         if (newsResponse is FeedResult.Success) {
             val saved = newsDataSource.saveNews(

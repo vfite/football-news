@@ -9,24 +9,20 @@ import com.vfite.football.data.models.MatchItem
 import com.vfite.football.data.models.Snapshot
 import com.vfite.football.domain.FeedResult
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 
 interface MatchesDataSource {
 
-    /**
-     * The stored Matches Snapshot if it was requested for [date]; null when never fetched,
-     * fetched for another date, or unreadable. Never throws.
-     */
-    suspend fun loadMatches(date: String): Snapshot<MatchItem>?
+    suspend fun loadMatches(date: LocalDate): Snapshot<MatchItem>?
 
-    /** Replaces the stored Matches Snapshot with [items] requested for [date] and fetched at [fetchedAt]. Never throws; a storage failure is returned as [FeedResult.Error]. */
-    suspend fun saveMatches(date: String, items: List<MatchItem>, fetchedAt: Instant): FeedResult<Unit>
+    suspend fun saveMatches(date: LocalDate, items: List<MatchItem>, fetchedAt: Instant): FeedResult<Unit>
 }
 
 class RoomMatchesDataSource(
     private val dao: SnapshotDao
 ) : MatchesDataSource {
 
-    override suspend fun loadMatches(date: String): Snapshot<MatchItem>? = storageCall("loadMatches", fallback = null) {
+    override suspend fun loadMatches(date: LocalDate): Snapshot<MatchItem>? = storageCall("loadMatches", fallback = null) {
         dao.loadMatches(date)?.let { (info, items) ->
             Snapshot(
                 items = items.map { it.toModel() },
@@ -35,7 +31,7 @@ class RoomMatchesDataSource(
         }
     }
 
-    override suspend fun saveMatches(date: String, items: List<MatchItem>, fetchedAt: Instant): FeedResult<Unit> = storageResult("saveMatches") {
+    override suspend fun saveMatches(date: LocalDate, items: List<MatchItem>, fetchedAt: Instant): FeedResult<Unit> = storageResult("saveMatches") {
         dao.replaceMatches(
             info = FeedInfoEntity(
                 feed = Feed.MATCHES,

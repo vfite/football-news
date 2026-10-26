@@ -10,10 +10,6 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 
-/**
- * Binds the platform-agnostic repositories and use cases from `:shared-domain`.
- * Requires `ApiRepository` from `apiModule(baseUrl)` and the data sources from `databaseModule(builder)`.
- */
 fun sharedDomainModule() = DI.Module("SharedDomainModule") {
 
     bind<NewsRepository>() with singleton {

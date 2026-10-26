@@ -5,6 +5,7 @@ import com.vfite.football.data.models.NewsItem
 import com.vfite.football.data.models.Snapshot
 import com.vfite.football.domain.FeedResult
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 
 class InMemoryNewsDataSource : LatestNewsDataSource {
     private var snapshot: Snapshot<NewsItem>? = null
@@ -18,13 +19,13 @@ class InMemoryNewsDataSource : LatestNewsDataSource {
 }
 
 class InMemoryMatchesDataSource : MatchesDataSource {
-    private var date: String? = null
+    private var date: LocalDate? = null
     private var snapshot: Snapshot<MatchItem>? = null
 
-    override suspend fun loadMatches(date: String): Snapshot<MatchItem>? =
+    override suspend fun loadMatches(date: LocalDate): Snapshot<MatchItem>? =
         snapshot.takeIf { this.date == date }
 
-    override suspend fun saveMatches(date: String, items: List<MatchItem>, fetchedAt: Instant): FeedResult<Unit> {
+    override suspend fun saveMatches(date: LocalDate, items: List<MatchItem>, fetchedAt: Instant): FeedResult<Unit> {
         this.date = date
         snapshot = Snapshot(items, fetchedAt)
         return FeedResult.Success(Unit)

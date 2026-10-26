@@ -51,7 +51,7 @@ feedResult
 Renderers are bound in DI with a `WidgetMode` tag. To add a new widget mode, bind a new `IRemoteViewRenderer` with its tag in `networkModule` and handle it in `LatestNewsViewModel.toggleMode()`.
 
 ### Ktor HTTP client (shared-domain)
-`ApiClient` wraps a Ktor `HttpClient` configured with `ContentNegotiation` (kotlinx.serialization JSON, `ignoreUnknownKeys = true`) and `Logging`.
+`ApiClient` wraps a Ktor `HttpClient` configured with `ContentNegotiation` (kotlinx.serialization JSON, `ignoreUnknownKeys = true`).
 
 ### Data sources are in-memory only
 `RealLatestNewsDataSource` and `RealMatchesDataSource` hold data in memory. 
@@ -60,16 +60,6 @@ There is no local database.
 ### Logging
 Use `Timber.d(...)` / `Timber.e(...)` throughout — never `Log.*` directly.
 
-## Agent skills
+## Domain docs
 
-### Issue tracker
-
-Tickets are local markdown files under `.scratch/<feature>/issues/`; specs live in `docs/specs/`. See `docs/agents/issue-tracker.md`.
-
-### Triage labels
-
-Default vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`), recorded as a `Status:` line in each ticket. See `docs/agents/triage-labels.md`.
-
-### Domain docs
-
-Single-context: `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+Single-context: `CONTEXT.md` + `docs/adr/` at the repo root.
