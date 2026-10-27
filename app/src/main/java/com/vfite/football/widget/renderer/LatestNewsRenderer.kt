@@ -12,14 +12,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.vfite.football.R
-import com.vfite.football.models.NewsItem
+import com.vfite.football.data.models.NewsItem
 import com.vfite.football.widget.IWidgetService
 import com.vfite.football.widget.system.LatestNewsBroadcastReceiver.Companion.ACTION_NEXT
 import com.vfite.football.widget.system.LatestNewsBroadcastReceiver.Companion.ACTION_PREV
 import com.vfite.football.widget.system.LatestNewsBroadcastReceiver.Companion.ACTION_SYNC
 import com.vfite.football.widget.ui.LatestNewsViewModel
-import com.vfite.football.widget.data.SyncState
+import com.vfite.football.domain.SyncState
 import com.vfite.football.widget.system.LatestNewsBroadcastReceiver.Companion.ACTION_SHOW_MATCHES
+import com.vfite.football.widget.system.createWidgetPendingEvent
 import timber.log.Timber
 
 class LatestNewsRenderer(
@@ -71,9 +72,7 @@ class LatestNewsRenderer(
 
         views.setOnClickPendingIntent(
             R.id.failed_sync_btn,
-            widgetService.createPendingEvent(context = context,
-                widgetId = widgetId,
-                action = ACTION_SYNC)
+            createWidgetPendingEvent(context = context, widgetId = widgetId, action = ACTION_SYNC)
         )
     }
 
@@ -101,30 +100,21 @@ class LatestNewsRenderer(
 
         remoteViews.setOnClickPendingIntent(
             R.id.prev_btn,
-            widgetService.createPendingEvent(context = context,
-                widgetId = widgetId,
-                action = ACTION_PREV)
-
+            createWidgetPendingEvent(context = context, widgetId = widgetId, action = ACTION_PREV)
         )
         remoteViews.setOnClickPendingIntent(
             R.id.next_btn,
-            widgetService.createPendingEvent(context = context,
-                widgetId = widgetId,
-                action = ACTION_NEXT)
+            createWidgetPendingEvent(context = context, widgetId = widgetId, action = ACTION_NEXT)
         )
 
         remoteViews.setOnClickPendingIntent(
             R.id.sync_btn,
-            widgetService.createPendingEvent(context = context,
-                widgetId = widgetId,
-                action = ACTION_SYNC)
+            createWidgetPendingEvent(context = context, widgetId = widgetId, action = ACTION_SYNC)
         )
 
         remoteViews.setOnClickPendingIntent(
             R.id.matches_btn,
-            widgetService.createPendingEvent(context = context,
-                widgetId = widgetId,
-                action = ACTION_SHOW_MATCHES)
+            createWidgetPendingEvent(context = context, widgetId = widgetId, action = ACTION_SHOW_MATCHES)
         )
 
         val newsIntent = getBrowserIntent(context, newsItem)
@@ -143,10 +133,21 @@ class LatestNewsRenderer(
 
     private fun getUrl(newsUrl: String, context: Context, newsItem: NewsItem): String {
         val url = newsUrl.format(
-            newsItem.categoryName(context), newsItem.id.toInt()
+            newsItem.getCategoryName(context), newsItem.id.toInt()
         )
         Timber.d("getUrl for NewsItem,  Url = $url")
         return url
+    }
+
+    private fun NewsItem.getCategoryName(context: Context): String {
+        val categoriesNames = context.resources.getStringArray(R.array.categoriesName)
+        val categoryCodes = context.resources.getStringArray(R.array.categoriesCodes)
+        categoriesNames.forEachIndexed { index, value ->
+            if (value.equals(category, ignoreCase = true)) {
+                return categoryCodes[index]
+            }
+        }
+        return category
     }
 
 }

@@ -1,14 +1,14 @@
 package com.vfite.football.widget.ui
 
 import com.vfite.football.domain.FeedResult
-import com.vfite.football.models.MatchItem
-import com.vfite.football.models.NewsFeed
-import com.vfite.football.models.NewsItem
+import com.vfite.football.data.models.MatchItem
+import com.vfite.football.data.models.NewsFeed
+import com.vfite.football.data.models.NewsItem
 import com.vfite.football.widget.WidgetMode
-import com.vfite.football.widget.data.SyncService
-import com.vfite.football.widget.data.SyncState
-import com.vfite.football.widget.domain.LoadDayMatchesUseCase
-import com.vfite.football.widget.domain.LoadLatestNewsUseCase
+import com.vfite.football.domain.SyncService
+import com.vfite.football.domain.SyncState
+import com.vfite.football.domain.LoadDayMatchesUseCase
+import com.vfite.football.domain.LoadLatestNewsUseCase
 import timber.log.Timber
 
 class LatestNewsViewModel(

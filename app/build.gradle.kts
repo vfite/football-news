@@ -49,6 +49,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":shared-domain"))
+
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.timber)
@@ -57,16 +59,9 @@ dependencies {
     implementation(libs.kodein.android)
     implementation(libs.kodein.conf)
 
-    implementation(libs.moshi)
-    implementation(libs.moshi.kotlin)
     implementation(libs.glide)
 
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-
     implementation(libs.work.runtime.ktx)
-
-    implementation(libs.okhttp.logging.interceptor)
 
     implementation(libs.material)
     testImplementation(libs.junit)

@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.vfite.football.models.NewsItem
+import com.vfite.football.data.models.NewsItem
 import timber.log.Timber
 import java.io.*
 

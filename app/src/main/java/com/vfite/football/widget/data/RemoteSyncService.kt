@@ -7,8 +7,10 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
+import com.vfite.football.domain.SyncService
+import com.vfite.football.domain.SyncState
 import com.vfite.football.widget.IWidgetService
-import com.vfite.football.widget.data.jobs.SyncNewsJob
+import com.vfite.football.widget.jobs.SyncNewsJob
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
