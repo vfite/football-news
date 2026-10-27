@@ -18,8 +18,9 @@ class FootballWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager?,
         appWidgetIds: IntArray
     ) {
-        val currentWidgetMode =
-            DI.global.direct.instance<LatestNewsViewModel>().mode
+        val latestNewsViewModel = DI.global.direct.instance<LatestNewsViewModel>()
+        latestNewsViewModel.loadData()
+        val currentWidgetMode = latestNewsViewModel.mode
         Timber.d("onUpdate, appWidgetIds= $appWidgetIds, currentWidgetMode=$currentWidgetMode")
 
         val renderer: IRemoteViewRenderer =

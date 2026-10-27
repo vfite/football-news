@@ -1,7 +1,9 @@
 package com.vfite.football
 
 import android.app.Application
+import com.vfite.football.data.db.createDatabaseBuilder
 import com.vfite.football.di.apiModule
+import com.vfite.football.di.databaseModule
 import com.vfite.football.di.networkModule
 import com.vfite.football.di.domainModule
 import com.vfite.football.di.sharedDomainModule
@@ -28,6 +30,7 @@ class FootballApplication : Application() {
             addImport(apiModule(baseUrl = BuildConfig.API_URL))
             addImport(systemModule(this@FootballApplication))
             addImport(domainModule(this@FootballApplication))
+            addImport(databaseModule(createDatabaseBuilder(this@FootballApplication)))
             addImport(sharedDomainModule())
         }
     }

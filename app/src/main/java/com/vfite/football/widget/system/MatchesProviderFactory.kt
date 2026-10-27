@@ -28,7 +28,7 @@ class MatchesProviderFactory(
     }
 
     override fun onDataSetChanged() {
-        matchItems = latestNewsViewModel.getMatches()
+        matchItems = latestNewsViewModel.getTodayGames()
     }
 
     override fun onDestroy() {}

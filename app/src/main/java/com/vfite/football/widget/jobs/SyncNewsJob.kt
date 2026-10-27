@@ -11,7 +11,8 @@ import com.vfite.football.widget.data.RemoteSyncService.Companion.SYNC_NEWS_MODE
 import com.vfite.football.domain.SyncService
 import com.vfite.football.domain.SyncState
 import com.vfite.football.domain.RefreshDataUseCase
-import com.vfite.football.domain.RefreshMatchesUseCase
+import com.vfite.football.data.MatchesRepository
+import com.vfite.football.widget.IWidgetService
 import org.kodein.di.DI
 import org.kodein.di.conf.global
 import org.kodein.di.direct
@@ -25,7 +26,8 @@ class SyncNewsJob(
     CoroutineWorker(context, workerParams) {
 
     private val refreshDataUseCase: RefreshDataUseCase = DI.global.direct.instance()
-    private val refreshMatchesUseCase: RefreshMatchesUseCase = DI.global.direct.instance()
+    private val matchesRepository: MatchesRepository = DI.global.direct.instance()
+    private val widgetService: IWidgetService = DI.global.direct.instance()
     private val syncService: SyncService = DI.global.direct.instance()
 
 
@@ -41,12 +43,13 @@ class SyncNewsJob(
     }
 
     private suspend fun syncMatches(): Result {
-        val result = refreshMatchesUseCase.execute()
+        val result = matchesRepository.refresh()
         result.onSuccess {
             syncService.updateState(SyncState.Synced)
         }.onError {
             syncService.updateState(SyncState.Failed)
         }
+        widgetService.invalidateWidget()
         return if (result is FeedResult.Success) {
             Result.success()
         } else {
@@ -61,6 +64,7 @@ class SyncNewsJob(
         }.onError {
             syncService.updateState(SyncState.Failed)
         }
+        widgetService.invalidateWidget()
         return if (result is FeedResult.Success) {
             Result.success()
         } else {
